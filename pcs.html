@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="Scrambling">
+        <h3>Scrambling and unscrambling operations</h3>
+        <p>
+            %Scrambling and unscrambling operation.<br>
+clc <br>
+clear all<br>
+close all<br>
+m=input('Enter the message bits:')<br>
+L=input('Enter the length of shift register:')<br>
+r=zeros(1,L);   %Initilization of Shift Register<br>
+for i=1:length(m)<br>
+    m1(i)=xor(r(3),r(4));<br>
+    m2(i)=xor(m(i),m1(i));<br>
+     r(4)=r(3);<br>
+     r(3)=r(2);<br>
+     r(2)=r(1);<br>
+     r(1)=m2(i);<br>
+end<br>
+disp(m2)<br>
+r=zeros(1,L);<br>
+for i=1:length(m2)<br>
+    x1(i)=xor(r(3),r(4));<br>
+    x(i)=xor(m2(i),x1(i));<br>
+    r(4)=r(3);<br>
+    r(3)=r(2);<br>
+    r(2)=r(1);<br>
+    r(1)=m2(i);<br>
+end<br>
+disp(x)<br>
+
+        </p>
+    </div>
+
+    <div class="SNR">
+        <h3>SNR calculation of PCM and DM</h3>
+        <p>
+            %PCM system:-A signal of fm=3.5khz,transmission rate=50kbps,Compute the SNR. 
+%The input signal has peak to peak value of 4v and rms value of 0.2v.<br>
+clc <br>
+clear all<br>
+close all<br>
+r=50e3;<br>
+Vpp=4;<br>
+fs=8000;<br>
+n=7;         % r=n*fs, n-7 bits<br>
+q=128;       %q=2^7<br>
+del=0.03125;    %del=Vpp/q<br>
+Np=8.138e-5;    %Np=del^2/12<br>
+Sp=0.04;        %Signal power=(vrms^2)<br>
+SNR=Sp/Np<br>
+SNBdb=10*log10(SNR)<br>
+
+-------------------------------------------------------<br>
+
+%DM system:-A signal of fm=1khz,sampling rate=50khz,Compute the SNR. 
+%The input signal has peak to peak value of 1v and banwidth of 5khz.
+% Calculate minimum step size to minimize slope overload.<br>
+Am=1;<br>
+W=5000;<br>
+fm=1000;<br>
+fs=50e3;<br>
+Ts=1/fs;<br>
+delta=2*pi*fm*Ts*Am<br>
+Sp=3;<br>
+Np=8*pi^2*W*fm^2*Ts^3;<br>
+snr=Sp/Np<br>
+snrdb=10*log10(snr)<br>
+
+        </p>
+    </div>
+    <div class="sampling">
+        <h3>Sampling theorem verification</h3>
+        <p>
+            clc;<br>
+close all;<br>
+clear all;<br>
+disp('Name=   Roll Number=');<br>
+disp('Verification of Sampling Theorem ');<br>
+Fm=input('Enter the modulating frequency Fm=');<br>
+A=input('Enter the amplitude A=');<br>
+t=0:0.1:10;<br>
+x=A*sin(2*3.14*Fm*t);<br>
+subplot(2,2,1);<br>
+plot(t,x);<br>
+title('Modulating Signal');<br>
+xlabel('Time');<br>
+ylabel('Amplitude');<br>
+Fs1=input('Enter the sampling frequency Fs1(Fs>2Fm)=');<br>
+n=0:0.2:5;<br>
+y1=A*sin(2*3.14*Fm*n/Fs1);<br>
+subplot(2,2,2);<br>
+stem(n,y1);<br>
+title('Fs>2Fm');<br>
+xlabel('n');<br>
+ylabel('Amplitude');<br>
+Fs2=input('Enter the sampling frequency Fs2(Fs=2Fm)==');<br>
+n=0:0.2:5;<br>
+y2=A*sin(2*3.14*Fm*n/Fs2);<br>
+subplot(2,2,3);<br>
+stem(n,y2);<br>
+title('Fs=2Fm');<br>
+xlabel('n');<br>
+ylabel('Amplitude');<br>
+Fs3=input('Enter the sampling frequency Fs3(Fs<2Fm)==');<br>
+n=0:0.2:5;<br>
+y3=A*sin(2*3.14*Fm*n/Fs3);<br>
+subplot(2,2,4);<br>
+stem(n,y3);<br>
+title('Fs<2Fm');<br>
+xlabel('n');<br>
+ylabel('Amplitude');<br>
+
+        </p>
+    </div>
+</body>
+</html>
